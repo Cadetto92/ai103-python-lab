@@ -4,43 +4,54 @@ A personal workspace for experimenting with the Microsoft AI-103 learning path.
 
 ## Quick start
 
-Create the local Python environment and install the dependencies:
+1. Create the local Python environment once:
 
 ```powershell
 py -3.13 -m venv .venv
 ```
 
-Activate the environment in each new PowerShell session:
+This workspace names the environment `.venv`. It is the same local Python
+environment that the AI-103 materials refer to as `labenv`.
+
+2. Activate the environment in each new PowerShell session:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-Upgrade `pip` and install the project dependencies:
+3. Upgrade `pip` and install the project dependencies once after creating the
+	environment:
 
 ```powershell
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-This workspace names the environment `.venv`. It is the same local Python
-environment that the AI-103 materials refer to as `labenv`.
+Repeat step 3 only when `requirements.txt` changes or you want to update the
+installed packages. You do not need to reinstall the dependencies before every
+script.
 
-Before running a Python script, declare that script's required environment
-variables in `.env`.
+4. Before running a Python script, copy `.env.example` to `.env` and fill in
+	the required variables for that script. Keep `.env` private; it is ignored by
+	Git.
 
-Make sure the required Azure resources already exist: an Azure OpenAI resource
-with a model deployment, or a Microsoft Foundry resource with a project and
-model deployment.
+```powershell
+Copy-Item .env.example .env
+```
 
-Run any Python script while the environment is active. For example:
+5. Make sure the required Azure resources already exist: an Azure OpenAI
+	resource with a model deployment, or a Microsoft Foundry resource with a
+	project and model deployment.
+
+6. Run any Python script while the environment is active. For example:
 
 ```powershell
 python .\src\authentication\01_openai_azure_api_key.py
 ```
 
-Replace the example path with the Python script you want to run. When you are
-finished, leave the environment with:
+Replace the example path with the Python script you want to run.
+
+7. When you are finished, leave the environment with:
 
 ```powershell
 deactivate
@@ -55,6 +66,7 @@ deactivate
 	- `03_azure_openai_azure_api_key.py`: older AzureOpenAI API-version method with an Azure OpenAI API key
 	- `04_azure_openai_entra_id.py`: older AzureOpenAI API-version method with a Microsoft Entra ID token
 	- `05_foundry_entra_id.py`: Microsoft Foundry SDK with a Microsoft Entra ID credential
+- `.env.example`: committed configuration template with empty values
 - `.env`: local configuration values; this file is ignored by Git and must never be committed
 
 ## GitHub
