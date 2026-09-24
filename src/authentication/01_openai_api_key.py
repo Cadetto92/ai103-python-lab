@@ -15,8 +15,7 @@ def main() -> None:
 
     # Inference: send a prompt after the client has been authenticated.
     response = client.responses.create(
-        # For the public OpenAI API, MODEL is an OpenAI model ID, not an Azure deployment name.
-        model=os.environ["MODEL"],
+        model=os.environ["MODEL"],  # Important: Use the deployed model name.
         input="Explain Microsoft Entra ID in one sentence.",
     )
     print(response.output_text)
