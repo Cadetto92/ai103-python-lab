@@ -13,13 +13,11 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
+This workspace names the environment `.venv`. It is the same local Python
+environment that the AI-103 materials refer to as `labenv`.
+
 Add credentials to `.env` only when an exercise needs them. The `.env` file is
 ignored by Git and must never be committed.
-
-The examples share `MODEL`. Use the deployed model name for the Azure OpenAI and
-Foundry examples. The API-key example uses the OpenAI model ID. Set
-`AZURE_RESOURCE_NAME` and `AZURE_AI_PROJECT_NAME` in `.env`; their full URLs are
-constructed in the scripts.
 
 Add your Python code under `src` and run it with the activated environment.
 
