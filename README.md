@@ -13,15 +13,15 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-Copy `.env.example` to `.env` and add credentials only when an exercise needs them.
-The `.env` file is ignored by Git and must never be committed.
+Add credentials to `.env` only when an exercise needs them. The `.env` file is
+ignored by Git and must never be committed.
 
 Add your Python code under `src` and run it with the activated environment.
 
 ## Suggested layout
 
 - `src/`: Python code for AI-103 exercises
-- `.env.example`: names of configuration values, without secrets
+- `.env`: local configuration values, never committed to GitHub
 
 ## GitHub
 
