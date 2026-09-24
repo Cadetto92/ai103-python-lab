@@ -16,21 +16,11 @@ python -m pip install -r requirements.txt
 Copy `.env.example` to `.env` and add credentials only when an exercise needs them.
 The `.env` file is ignored by Git and must never be committed.
 
-Run the environment check:
-
-```powershell
-python experiments\01_environment_check.py
-```
-
-The `experiments` folder is for quick code tests. Put reusable code in `src` and
-longer explorations in `notebooks`.
+Add your Python code under `src` and run it with the activated environment.
 
 ## Suggested layout
 
-- `experiments/`: small, focused experiments
-- `notebooks/`: Jupyter notebooks for guided exercises
-- `src/`: reusable Python modules
-- `tests/`: automated checks
+- `src/`: Python code for AI-103 exercises
 - `.env.example`: names of configuration values, without secrets
 
 ## GitHub

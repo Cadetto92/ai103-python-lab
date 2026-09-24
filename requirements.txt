@@ -3,10 +3,3 @@ azure-identity
 azure-ai-inference
 python-dotenv
 rich
-
-# Interactive learning
-jupyter
-ipykernel
-
-# Testing
-pytest
