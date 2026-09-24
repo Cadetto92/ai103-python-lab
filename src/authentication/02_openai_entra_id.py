@@ -8,7 +8,7 @@ from openai import OpenAI
 
 
 def main() -> None:
-    # Load the Azure OpenAI endpoint and deployment name from the local .env file.
+    # Load the Azure OpenAI resource name and deployment name from the local .env file.
     load_dotenv()
 
     # Authentication: DefaultAzureCredential looks for an available Entra ID
@@ -19,14 +19,17 @@ def main() -> None:
         credential,
         "https://cognitiveservices.azure.com/.default",
     )
+    # Build the Azure OpenAI endpoint from the resource name.
     client = OpenAI(
         api_key=token_provider,
-        base_url=f"{os.environ['AZURE_OPENAI_ENDPOINT'].rstrip('/')}/openai/v1/",
+        base_url=(
+            f"https://{os.environ['AZURE_RESOURCE_NAME']}.openai.azure.com/openai/v1/"
+        ),
     )
 
     # Inference: use the authenticated OpenAI-compatible client to call Azure OpenAI.
     response = client.responses.create(
-        model=os.environ["AZURE_OPENAI_DEPLOYMENT"],
+        model=os.environ["MODEL"],  # Use the deployed model name.
         input="Explain Microsoft Entra ID in one sentence.",
     )
     print(response.output_text)

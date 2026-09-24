@@ -16,6 +16,11 @@ python -m pip install -r requirements.txt
 Add credentials to `.env` only when an exercise needs them. The `.env` file is
 ignored by Git and must never be committed.
 
+The examples share `MODEL`. Use the deployed model name for the Azure OpenAI and
+Foundry examples. The API-key example uses the OpenAI model ID. Set
+`AZURE_RESOURCE_NAME` and `AZURE_AI_PROJECT_NAME` in `.env`; their full URLs are
+constructed in the scripts.
+
 Add your Python code under `src` and run it with the activated environment.
 
 Authentication examples are in `src\authentication`:

@@ -8,13 +8,17 @@ from azure.identity import DefaultAzureCredential
 
 
 def main() -> None:
-    # Load the Foundry project endpoint and model deployment name from .env.
+    # Load the Foundry resource, project, and model deployment names from .env.
     load_dotenv()
 
     # Authentication: DefaultAzureCredential obtains an Entra ID token without
     # storing a password or API key in the source code.
+    # Build the Foundry project endpoint from the resource and project names.
     project_client = AIProjectClient(
-        endpoint=os.environ["AZURE_AI_PROJECT_ENDPOINT"],
+        endpoint=(
+            f"https://{os.environ['AZURE_RESOURCE_NAME']}.services.ai.azure.com/"
+            f"api/projects/{os.environ['AZURE_AI_PROJECT_NAME']}"
+        ),
         credential=DefaultAzureCredential(),
     )
 
@@ -23,7 +27,7 @@ def main() -> None:
 
     # Inference: send a prompt through the authenticated Foundry connection.
     response = openai_client.responses.create(
-        model=os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"],
+        model=os.environ["MODEL"],  # Use the deployed model name.
         input="Explain Microsoft Entra ID in one sentence.",
     )
     print(response.output_text)

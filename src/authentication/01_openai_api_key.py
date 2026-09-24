@@ -7,7 +7,7 @@ from openai import OpenAI
 
 
 def main() -> None:
-    # Load values such as OPENAI_API_KEY and OPENAI_MODEL from the local .env file.
+    # Load OPENAI_API_KEY and MODEL from the local .env file.
     load_dotenv()
 
     # Authentication: the OpenAI SDK reads the API key supplied here.
@@ -15,7 +15,8 @@ def main() -> None:
 
     # Inference: send a prompt after the client has been authenticated.
     response = client.responses.create(
-        model=os.environ["OPENAI_MODEL"],
+        # For the public OpenAI API, MODEL is an OpenAI model ID, not an Azure deployment name.
+        model=os.environ["MODEL"],
         input="Explain Microsoft Entra ID in one sentence.",
     )
     print(response.output_text)
