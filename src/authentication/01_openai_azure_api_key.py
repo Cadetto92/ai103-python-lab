@@ -1,6 +1,8 @@
 """Use the newer OpenAI v1 API with an Azure OpenAI API key."""
 
 import os
+from pathlib import Path
+
 from dotenv import load_dotenv
 
 from openai import OpenAI
@@ -9,7 +11,7 @@ from openai import OpenAI
 
 def main() -> None:
     # Load the Azure resource, deployment, and API key for script 01.
-    load_dotenv()
+    load_dotenv(Path(__file__).resolve().parent / ".env")
 
     # Authentication: the OpenAI SDK sends the Azure API key with each request.
     client = OpenAI(

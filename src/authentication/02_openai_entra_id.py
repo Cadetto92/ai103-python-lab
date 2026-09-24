@@ -1,6 +1,8 @@
 """Use the newer OpenAI v1 API with an Entra ID user bearer token."""
 
 import os
+from pathlib import Path
+
 from dotenv import load_dotenv
 
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
@@ -10,7 +12,7 @@ from openai import OpenAI
 
 def main() -> None:
     # Load the Azure OpenAI resource name and deployment name for script 02.
-    load_dotenv()
+    load_dotenv(Path(__file__).resolve().parent / ".env")
 
     # Authentication: obtain a bearer token for the signed-in Entra ID user.
     # DefaultAzureCredential can use Azure CLI, Visual Studio Code, or a managed identity.

@@ -1,6 +1,8 @@
 """Use the older AzureOpenAI API-version method with an Azure API key."""
 
 import os
+from pathlib import Path
+
 from dotenv import load_dotenv
 
 from openai import AzureOpenAI
@@ -9,7 +11,7 @@ from openai import AzureOpenAI
 
 def main() -> None:
     # Load the Azure OpenAI resource, API version, deployment, and key.
-    load_dotenv()
+    load_dotenv(Path(__file__).resolve().parent / ".env")
 
     # Authentication: AzureOpenAI sends the Azure API key with each request.
     client = AzureOpenAI(

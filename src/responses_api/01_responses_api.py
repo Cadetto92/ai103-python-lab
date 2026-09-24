@@ -1,4 +1,4 @@
-"""Run an Entra ID Chat Completions conversation with context."""
+"""Run an Entra ID Responses API loop without conversation context."""
 
 import os
 from pathlib import Path
@@ -23,13 +23,6 @@ def main() -> None:
         ),
     )
 
-    messages = [
-        {
-            "role": "system",
-            "content": "Answer in one short sentence.",
-        }
-    ]
-
     while True:
         user_input = input("Enter a prompt, or type 'quit' to quit: ").strip()
         if user_input.lower() == "quit":
@@ -37,14 +30,11 @@ def main() -> None:
         if not user_input:
             continue
 
-        messages.append({"role": "user", "content": user_input})
-        response = client.chat.completions.create(
+        response = client.responses.create(
             model=os.environ["DEPLOYMENT_NAME"],
-            messages=messages,
+            input=user_input,
         )
-        assistant_message = response.choices[0].message.content or ""
-        messages.append({"role": "assistant", "content": assistant_message})
-        print(f"Assistant: {assistant_message}")
+        print(f"Assistant: {response.output_text}")
 
 
 if __name__ == "__main__":

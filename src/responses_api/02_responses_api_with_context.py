@@ -1,10 +1,10 @@
-"""Run an Entra ID Chat Completions conversation with context."""
+"""Run an Entra ID Responses API conversation with context."""
 
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+from dotenv import load_dotenv
 from openai import OpenAI
 
 
@@ -23,12 +23,7 @@ def main() -> None:
         ),
     )
 
-    messages = [
-        {
-            "role": "system",
-            "content": "Answer in one short sentence.",
-        }
-    ]
+    previous_response_id = None
 
     while True:
         user_input = input("Enter a prompt, or type 'quit' to quit: ").strip()
@@ -37,13 +32,17 @@ def main() -> None:
         if not user_input:
             continue
 
-        messages.append({"role": "user", "content": user_input})
-        response = client.chat.completions.create(
-            model=os.environ["DEPLOYMENT_NAME"],
-            messages=messages,
-        )
-        assistant_message = response.choices[0].message.content or ""
-        messages.append({"role": "assistant", "content": assistant_message})
+        response_parameters = {
+            "model": os.environ["DEPLOYMENT_NAME"],
+            "instructions": "Answer in one short sentence.",
+            "input": user_input,
+        }
+        if previous_response_id:
+            response_parameters["previous_response_id"] = previous_response_id
+
+        response = client.responses.create(**response_parameters)
+        assistant_message = response.output_text
+        previous_response_id = response.id
         print(f"Assistant: {assistant_message}")
 
 

@@ -1,6 +1,8 @@
 """Authenticate with the Microsoft Foundry SDK using Microsoft Entra ID."""
 
 import os
+from pathlib import Path
+
 from dotenv import load_dotenv
 
 from azure.ai.projects import AIProjectClient
@@ -10,7 +12,7 @@ from azure.identity import DefaultAzureCredential
 
 def main() -> None:
     # Load the Foundry resource, project, and deployment names for script 05.
-    load_dotenv()
+    load_dotenv(Path(__file__).resolve().parent / ".env")
 
     # Authentication: DefaultAzureCredential obtains an Entra ID token without
     # storing a password or API key in the source code.

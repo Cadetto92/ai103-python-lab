@@ -31,13 +31,16 @@ Repeat step 3 only when `requirements.txt` changes or you want to update the
 installed packages. You do not need to reinstall the dependencies before every
 script.
 
-4. Before running a Python script, copy `.env.example` to `.env` and fill in
-	the required variables for that script. Keep `.env` private; it is ignored by
-	Git.
+4. Before running a Python script, copy the `.env.example` from that script's
+	folder to `.env` in the same folder, then fill in the required variables.
+	Keep `.env` private; it is ignored by Git.
 
 ```powershell
-Copy-Item .env.example .env
+Copy-Item .\src\authentication\.env.example .\src\authentication\.env
 ```
+
+Use the corresponding `.env.example` for `chat_completion_api` or
+`responses_api` when running a script from those folders.
 
 5. Make sure the required Azure resources already exist: an Azure OpenAI
 	resource with a model deployment, or a Microsoft Foundry resource with a
@@ -66,12 +69,16 @@ deactivate
 	- `03_azure_openai_azure_api_key.py`: older AzureOpenAI API-version method with an Azure OpenAI API key
 	- `04_azure_openai_entra_id.py`: older AzureOpenAI API-version method with a Microsoft Entra ID token
 	- `05_foundry_entra_id.py`: Microsoft Foundry SDK with a Microsoft Entra ID credential
+	- `.env.example`: committed configuration template for authentication scripts
 
 - `src/chat_completion_api/`: Chat Completions examples using Entra ID authentication, without and with conversation context
 	- `01_chat_completion.py`: simple request without previous context
 	- `02_chat_completion_with_context.py`: request with previous conversation messages
-- `.env.example`: committed configuration template with empty values
-- `.env`: local configuration values; this file is ignored by Git and must never be committed
+	- `.env.example`: committed configuration template for Chat Completions scripts
+- `src/responses_api/`: Responses API examples using Entra ID authentication, without and with conversation context
+	- `01_responses_api.py`: interactive request without previous context
+	- `02_responses_api_with_context.py`: interactive request with previous conversation messages
+	- `.env.example`: committed configuration template for Responses API scripts
 
 ## GitHub
 
