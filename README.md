@@ -20,9 +20,9 @@ Add your Python code under `src` and run it with the activated environment.
 
 Authentication examples are in `src\authentication`:
 
-- `openai_api_key.py`: OpenAI SDK with an API key
-- `openai_entra_id.py`: OpenAI SDK with a Microsoft Entra ID token
-- `foundry_entra_id.py`: Microsoft Foundry SDK with a Microsoft Entra ID credential
+- `01_openai_api_key.py`: OpenAI SDK with an API key
+- `02_openai_entra_id.py`: OpenAI SDK with a Microsoft Entra ID token
+- `03_foundry_entra_id.py`: Microsoft Foundry SDK with a Microsoft Entra ID credential
 
 ## Suggested layout
 
