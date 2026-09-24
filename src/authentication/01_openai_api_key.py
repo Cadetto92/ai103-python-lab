@@ -15,7 +15,7 @@ def main() -> None:
 
     # Inference: send a prompt after the client has been authenticated.
     response = client.responses.create(
-        model=os.environ["MODEL"],  # Important: Use the deployed model name.
+        model=os.environ["MODEL"],  # Use an OpenAI model ID, such as gpt-4o-mini.
         input="Explain Microsoft Entra ID in one sentence.",
     )
     print(response.output_text)
