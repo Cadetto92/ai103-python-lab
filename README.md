@@ -4,11 +4,21 @@ A personal workspace for experimenting with the Microsoft AI-103 learning path.
 
 ## Quick start
 
-Create and activate the local environment:
+Create the local Python environment and install the dependencies:
 
 ```powershell
 py -3.13 -m venv .venv
+```
+
+Activate the environment in each new PowerShell session:
+
+```powershell
 .\.venv\Scripts\Activate.ps1
+```
+
+Upgrade `pip` and install the project dependencies:
+
+```powershell
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
@@ -16,21 +26,36 @@ python -m pip install -r requirements.txt
 This workspace names the environment `.venv`. It is the same local Python
 environment that the AI-103 materials refer to as `labenv`.
 
-Add credentials to `.env` only when an exercise needs them. The `.env` file is
-ignored by Git and must never be committed.
+Before running a Python script, declare that script's required environment
+variables in `.env`.
 
-Add your Python code under `src` and run it with the activated environment.
+Make sure the required Azure resources already exist: an Azure OpenAI resource
+with a model deployment, or a Microsoft Foundry resource with a project and
+model deployment.
 
-Authentication examples are in `src\authentication`:
+Run any Python script while the environment is active. For example:
 
-- `01_openai_azure_api_key.py`: OpenAI SDK with an Azure OpenAI API key
-- `02_openai_entra_id.py`: OpenAI SDK with a Microsoft Entra ID token
-- `03_foundry_entra_id.py`: Microsoft Foundry SDK with a Microsoft Entra ID credential
+```powershell
+python .\src\authentication\01_openai_azure_api_key.py
+```
 
-## Suggested layout
+Replace the example path with the Python script you want to run. When you are
+finished, leave the environment with:
+
+```powershell
+deactivate
+```
+
+## Layout
 
 - `src/`: Python code for AI-103 exercises
-- `.env`: local configuration values, never committed to GitHub
+- `src/authentication/`: authentication examples for Azure OpenAI and Microsoft Foundry
+	- `01_openai_azure_api_key.py`: newer OpenAI v1 API with an Azure OpenAI API key
+	- `02_openai_entra_id.py`: newer OpenAI v1 API with a Microsoft Entra ID token
+	- `03_azure_openai_azure_api_key.py`: older AzureOpenAI API-version method with an Azure OpenAI API key
+	- `04_azure_openai_entra_id.py`: older AzureOpenAI API-version method with a Microsoft Entra ID token
+	- `05_foundry_entra_id.py`: Microsoft Foundry SDK with a Microsoft Entra ID credential
+- `.env`: local configuration values; this file is ignored by Git and must never be committed
 
 ## GitHub
 
@@ -43,3 +68,61 @@ git commit -m "Initial AI-103 Python lab setup"
 git branch -M main
 git push -u origin main
 ```
+
+## Authentication
+
+The examples are in `src/authentication/`. Scripts `01` and `02` use the newer
+Azure OpenAI v1 API approach with the generic `OpenAI` client. Scripts `03` and
+`04` show the older Azure-specific API-version approach with the `AzureOpenAI`
+client. Script `05` uses the Microsoft Foundry project client with a credential
+passed directly to that client.
+
+All five scripts call a deployed model in Azure. The first four compare the
+newer v1 API approach with the older API-version approach and show two
+authentication choices; the fifth uses the Microsoft Foundry project client.
+
+| Script | Client | Authentication | Endpoint style |
+| --- | --- | --- | --- |
+| `01_openai_azure_api_key.py` | `OpenAI` from the `openai` package | Azure OpenAI API key | Azure OpenAI `/openai/v1/` endpoint |
+| `02_openai_entra_id.py` | `OpenAI` from the `openai` package | Entra ID user bearer token through a token provider | Azure OpenAI `/openai/v1/` endpoint |
+| `03_azure_openai_azure_api_key.py` | `AzureOpenAI` from the `openai` package | Azure OpenAI API key | Azure endpoint plus API version |
+| `04_azure_openai_entra_id.py` | `AzureOpenAI` from the `openai` package | Entra ID user bearer token through a token provider | Azure endpoint plus API version |
+| `05_foundry_entra_id.py` | `AIProjectClient` from `azure-ai-projects` | Entra ID credential passed directly to the client | Microsoft Foundry project endpoint |
+
+### Newer v1 API versus older API-version method
+
+Both clients come from the same `openai` Python package. Azure OpenAI is the
+Azure service being called; `AzureOpenAI` is not a separate Azure SDK.
+
+The newer v1 approach in scripts `01` and `02` uses the generic `OpenAI` client
+with a `base_url` ending in `/openai/v1/`. The `model` argument is the Azure
+deployment name. This approach uses the OpenAI-compatible v1 endpoint and does
+not require a dated Azure API version in the client constructor.
+
+The older API-version method in scripts `03` and `04` uses the Azure-specific
+`AzureOpenAI` client with `azure_endpoint` and a dated `api_version`. The client
+uses the Azure OpenAI URL shape and API-version setting directly instead of the
+`/openai/v1/` base URL. Script `03` uses an API key; script `04` uses an Entra
+ID bearer-token provider.
+
+In short: scripts `01` and `02` demonstrate the newer v1 endpoint, while scripts
+`03` and `04` demonstrate the older Azure-specific API-version configuration.
+The authentication choice is independent of the endpoint method.
+
+`AIProjectClient` is from the `azure-ai-projects` package. In script `05`, the
+Entra ID credential is passed directly to `AIProjectClient`, which owns token
+acquisition for the Microsoft Foundry project and returns an OpenAI-compatible
+client for model inference. This differs from scripts `02` and `04`, where a
+token provider supplies a user bearer token directly to the OpenAI client.
+
+### Authentication choices
+
+- **Azure OpenAI API key:** simple for local learning and quick experiments.
+	The key grants access to the Azure OpenAI resource, so keep it in `.env`, do
+	not commit it, and rotate it if it is exposed.
+- **Microsoft Entra ID:** scripts `02` and `04` use a token provider to supply a
+	bearer token to the OpenAI client; script `05` passes the credential directly
+	to `AIProjectClient`. `DefaultAzureCredential` can find a signed-in user via
+	Azure CLI or Visual Studio Code, or use a managed identity. The identity needs
+	the appropriate Azure role on the Azure OpenAI resource or Foundry project.
+	No long-lived API key is stored in these scripts.

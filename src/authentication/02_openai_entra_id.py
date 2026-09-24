@@ -1,4 +1,4 @@
-"""Authenticate with the OpenAI SDK using Microsoft Entra ID."""
+"""Use the newer OpenAI v1 API with an Entra ID user bearer token."""
 
 import os
 from dotenv import load_dotenv
@@ -7,14 +7,15 @@ from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from openai import OpenAI
 
 
+
 def main() -> None:
     # Load the Azure OpenAI resource name and deployment name for script 02.
     load_dotenv()
 
-    # Authentication: DefaultAzureCredential looks for an available Entra ID
-    # login, such as Azure CLI, Visual Studio Code, or a managed identity.
+    # Authentication: obtain a bearer token for the signed-in Entra ID user.
+    # DefaultAzureCredential can use Azure CLI, Visual Studio Code, or a managed identity.
     credential = DefaultAzureCredential()
-    # The token provider requests and refreshes a token for Azure AI services.
+    # Pass a token provider so the OpenAI client receives and refreshes the bearer token.
     token_provider = get_bearer_token_provider(
         credential,
         "https://cognitiveservices.azure.com/.default",
@@ -30,7 +31,7 @@ def main() -> None:
     # Inference: use the authenticated OpenAI-compatible client to call Azure OpenAI.
     response = client.responses.create(
         model=os.environ["DEPLOYMENT_NAME_02"],  # Important: use the deployed model name.
-        input="In one or two sentences, explain how an Entra ID bearer token authenticates a request to Azure OpenAI.",
+        input="In one or two sentences, explain how DefaultAzureCredential supplies an Entra ID token to the OpenAI client.",
     )
     print(response.output_text)
 

@@ -1,9 +1,10 @@
-"""Authenticate with Azure OpenAI using an Azure API key."""
+"""Use the newer OpenAI v1 API with an Azure OpenAI API key."""
 
 import os
 from dotenv import load_dotenv
 
 from openai import OpenAI
+
 
 
 def main() -> None:
@@ -21,7 +22,7 @@ def main() -> None:
     # Inference: use the deployed model through the Azure OpenAI endpoint.
     response = client.responses.create(
         model=os.environ["DEPLOYMENT_NAME_01"],  # Important: use the deployed model name.
-        input="In one or two sentences, explain how an API key authenticates a request to Azure OpenAI.",
+        input="In one or two sentences, explain how the Azure OpenAI API key authenticates this request.",
     )
     print(response.output_text)
 
