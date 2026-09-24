@@ -14,7 +14,7 @@ def main() -> None:
     credential = DefaultAzureCredential()
     token_provider = get_bearer_token_provider(
         credential,
-        "https://cognitiveservices.azure.com/.default",
+        "https://ai.azure.com/.default",
     )
     client = OpenAI(
         api_key=token_provider,
@@ -30,6 +30,8 @@ def main() -> None:
         if not user_input:
             continue
 
+        # Responses API accepts a string input for an independent prompt, so no
+        # previous response or conversation history is sent here.
         response = client.responses.create(
             model=os.environ["DEPLOYMENT_NAME"],
             input=user_input,

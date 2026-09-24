@@ -14,7 +14,7 @@ def main() -> None:
     credential = DefaultAzureCredential()
     token_provider = get_bearer_token_provider(
         credential,
-        "https://cognitiveservices.azure.com/.default",
+        "https://ai.azure.com/.default",
     )
     client = OpenAI(
         api_key=token_provider,
@@ -23,6 +23,8 @@ def main() -> None:
         ),
     )
 
+    # Chat Completions keeps context in an ordered messages array. Each item
+    # identifies who produced the content: system, user, or assistant.
     messages = [
         {
             "role": "system",
@@ -37,12 +39,14 @@ def main() -> None:
         if not user_input:
             continue
 
+        # Add the new user turn before sending the complete conversation.
         messages.append({"role": "user", "content": user_input})
         response = client.chat.completions.create(
             model=os.environ["DEPLOYMENT_NAME"],
             messages=messages,
         )
         assistant_message = response.choices[0].message.content or ""
+        # Add the model reply so the next request can use this turn as context.
         messages.append({"role": "assistant", "content": assistant_message})
         print(f"Assistant: {assistant_message}")
 

@@ -122,12 +122,19 @@ with a `base_url` ending in `/openai/v1/`. The `model` argument is the Azure
 deployment name. This approach uses the OpenAI-compatible v1 endpoint and does
 not require a dated Azure API version in the client constructor.
 
+For Entra ID authentication, the newer v1 examples use the
+`https://ai.azure.com/.default` scope. The Chat Completions and Responses API
+folders use this same newer scope.
+
 The older API-version method in scripts `03` and `04` uses the Azure-specific
 `AzureOpenAI` client with `azure_endpoint` and a dated `api_version`. The client
 uses the Azure OpenAI URL shape and API-version setting directly instead of the
 `/openai/v1/` base URL. Script `03` uses an API key; script `04` uses an Entra
 ID bearer-token provider. Both use the Chat Completions endpoint, which is
 compatible with this older API-version method.
+
+The older `AzureOpenAI` API-version example `04` intentionally keeps the
+`https://cognitiveservices.azure.com/.default` scope used by that legacy method.
 
 In short: scripts `01` and `02` demonstrate the newer v1 endpoint, while scripts
 `03` and `04` demonstrate the older Azure-specific API-version configuration.

@@ -14,7 +14,7 @@ def main() -> None:
     credential = DefaultAzureCredential()
     token_provider = get_bearer_token_provider(
         credential,
-        "https://cognitiveservices.azure.com/.default",
+        "https://ai.azure.com/.default",
     )
     client = OpenAI(
         api_key=token_provider,
@@ -30,6 +30,8 @@ def main() -> None:
         if not user_input:
             continue
 
+        # Chat Completions always receives a messages array. With no context,
+        # the array contains only the current user message.
         response = client.chat.completions.create(
             model=os.environ["DEPLOYMENT_NAME"],
             messages=[{"role": "user", "content": user_input}],

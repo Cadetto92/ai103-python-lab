@@ -20,7 +20,7 @@ def main() -> None:
     # Pass a token provider so the OpenAI client receives and refreshes the bearer token.
     token_provider = get_bearer_token_provider(
         credential,
-        "https://cognitiveservices.azure.com/.default",
+        "https://ai.azure.com/.default",
     )
     # Build the Azure OpenAI endpoint from the resource name.
     client = OpenAI(
