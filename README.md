@@ -66,6 +66,10 @@ deactivate
 	- `03_azure_openai_azure_api_key.py`: older AzureOpenAI API-version method with an Azure OpenAI API key
 	- `04_azure_openai_entra_id.py`: older AzureOpenAI API-version method with a Microsoft Entra ID token
 	- `05_foundry_entra_id.py`: Microsoft Foundry SDK with a Microsoft Entra ID credential
+
+- `src/chat_completion_api/`: Chat Completions examples using Entra ID authentication, without and with conversation context
+	- `01_chat_completion.py`: simple request without previous context
+	- `02_chat_completion_with_context.py`: request with previous conversation messages
 - `.env.example`: committed configuration template with empty values
 - `.env`: local configuration values; this file is ignored by Git and must never be committed
 
