@@ -21,11 +21,16 @@ def main() -> None:
     )
 
     # Inference: model is the name of the deployment in Azure OpenAI.
-    response = client.responses.create(
+    response = client.chat.completions.create(
         model=os.environ["DEPLOYMENT_NAME_03"],
-        input="In one or two sentences, explain how the AzureOpenAI client uses azure_endpoint and api_version to connect to Azure OpenAI.",
+        messages=[
+            {
+                "role": "user",
+                "content": "In one or two sentences, explain how the AzureOpenAI client uses azure_endpoint and api_version to connect to Azure OpenAI.",
+            }
+        ],
     )
-    print(response.output_text)
+    print(response.choices[0].message.content)
 
 
 if __name__ == "__main__":
