@@ -1,5 +1,7 @@
 # Core tools for AI-103 experiments
 azure-identity
 azure-ai-inference
+azure-ai-projects
+openai
 python-dotenv
 rich

@@ -18,6 +18,12 @@ ignored by Git and must never be committed.
 
 Add your Python code under `src` and run it with the activated environment.
 
+Authentication examples are in `src\authentication`:
+
+- `openai_api_key.py`: OpenAI SDK with an API key
+- `openai_entra_id.py`: OpenAI SDK with a Microsoft Entra ID token
+- `foundry_entra_id.py`: Microsoft Foundry SDK with a Microsoft Entra ID credential
+
 ## Suggested layout
 
 - `src/`: Python code for AI-103 exercises
