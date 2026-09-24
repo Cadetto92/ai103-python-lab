@@ -28,7 +28,7 @@ def main() -> None:
     # Inference: send a prompt through the authenticated Foundry connection.
     response = openai_client.responses.create(
         model=os.environ["DEPLOYMENT_NAME_03"],  # Important: use the deployed model name.
-        input="Explain Microsoft Entra ID in one sentence.",
+        input="In one or two sentences, explain how Microsoft Foundry uses Entra ID to authenticate access to a project.",
     )
     print(response.output_text)
 

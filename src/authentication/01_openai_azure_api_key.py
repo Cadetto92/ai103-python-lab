@@ -1,8 +1,8 @@
 """Authenticate with Azure OpenAI using an Azure API key."""
 
 import os
-
 from dotenv import load_dotenv
+
 from openai import OpenAI
 
 
@@ -21,7 +21,7 @@ def main() -> None:
     # Inference: use the deployed model through the Azure OpenAI endpoint.
     response = client.responses.create(
         model=os.environ["DEPLOYMENT_NAME_01"],  # Important: use the deployed model name.
-        input="Explain Microsoft Entra ID in one sentence.",
+        input="In one or two sentences, explain how an API key authenticates a request to Azure OpenAI.",
     )
     print(response.output_text)
 

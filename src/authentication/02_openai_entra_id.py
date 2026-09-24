@@ -30,7 +30,7 @@ def main() -> None:
     # Inference: use the authenticated OpenAI-compatible client to call Azure OpenAI.
     response = client.responses.create(
         model=os.environ["DEPLOYMENT_NAME_02"],  # Important: use the deployed model name.
-        input="Explain Microsoft Entra ID in one sentence.",
+        input="In one or two sentences, explain how an Entra ID bearer token authenticates a request to Azure OpenAI.",
     )
     print(response.output_text)
 
