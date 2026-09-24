@@ -1,0 +1,12 @@
+# Core tools for AI-103 experiments
+azure-identity
+azure-ai-inference
+python-dotenv
+rich
+
+# Interactive learning
+jupyter
+ipykernel
+
+# Testing
+pytest
